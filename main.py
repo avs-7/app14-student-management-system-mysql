@@ -1,10 +1,11 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, \
-     QLineEdit, QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, \
-     QVBoxLayout, QComboBox, QToolBar, QStatusBar, QMessageBox
-from PyQt6.QtGui import QAction, QIcon
-import sys
 import sqlite3
+import sys
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtWidgets import QApplication, QLabel, QGridLayout, \
+    QLineEdit, QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, \
+    QVBoxLayout, QComboBox, QToolBar, QStatusBar, QMessageBox
 
 
 class DatabaseConnection:
@@ -113,6 +114,7 @@ class AboutDialog(QMessageBox):
         """
         self.setText(content)
 
+
 class EditDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -162,6 +164,8 @@ class EditDialog(QDialog):
 
         main_window.load_data()
 
+        self.close()
+
 
 class DeleteDialog(QDialog):
     def __init__(self):
@@ -187,7 +191,7 @@ class DeleteDialog(QDialog):
 
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
-        cursor.execute("DELETE from students WHERE id = ?", (student_id, ))
+        cursor.execute("DELETE from students WHERE id = ?", (student_id,))
         connection.commit()
         cursor.close()
         connection.close()
@@ -241,6 +245,7 @@ class InsertDialog(QDialog):
         cursor.close()
         connection.close()
         main_window.load_data()
+        self.close()
 
 
 class SearchDialog(QDialog):
@@ -275,6 +280,7 @@ class SearchDialog(QDialog):
 
         cursor.close()
         connection.close()
+        self.close()
 
 
 app = QApplication(sys.argv)
